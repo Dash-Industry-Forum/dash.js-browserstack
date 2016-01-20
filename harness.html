@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dash.js Cross-platform Harness</title>
+    </head>
+    <body>
+        <video></video>
+        <script type="text/javascript" src="/dash/dist/dash.externals.debug.js"></script>
+        <script type="text/javascript" src="/dash/dist/dash.no-externals.debug.js"></script>
+        <script type="text/javascript">
+            var events;
+            var video = document.querySelector('video');
+            var dp = MediaPlayer().create();
+            var bindTo = ['playing', 'timeupdate', 'seeking', 'seeked', 'ended'];
+
+            dp.initialize();
+            dp.attachView(video);
+
+            function listener(e) {
+                if (events[e.type]) {
+                    events[e.type] += 1;
+                } else {
+                    events[e.type] = 1;
+                }
+            }
+
+            for (var i = 0; i < bindTo.length; i++) {
+                video.addEventListener(bindTo[i], listener);
+            }
+
+            function resetEvents() {
+                events = {};
+            }
+
+            function mpd(str) {
+                resetEvents();
+                dp.attachSource(str);
+                dp.play();
+            }
+        </script>
+    </body>
+</html>

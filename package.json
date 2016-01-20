@@ -1,0 +1,15 @@
+{
+  "name": "dashjs-browserstack",
+  "version": "0.1.0",
+  "devDependencies": {},
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "browserstack-webdriver": "^2.41.1"
+  }
+}
