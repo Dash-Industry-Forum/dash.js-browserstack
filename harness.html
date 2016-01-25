@@ -2,13 +2,37 @@
 <html>
     <head>
         <title>Dash.js Cross-platform Harness</title>
+        <style>
+            video {
+                width: 50%;
+                display: inline-block;
+            }
+            #logger {
+                height: 250px;
+                overflow-y: auto;
+            }
+            #state {
+                width: 45%;
+                display: inline-block;
+            }
+        </style>
     </head>
     <body>
-        <video></video>
+        <video controls="true"></video>
+        <div id="state"></div>
+        <div id="logger"></div>
         <script type="text/javascript" src="/dash/dist/dash.externals.debug.js"></script>
         <script type="text/javascript" src="/dash/dist/dash.no-externals.debug.js"></script>
         <script type="text/javascript">
-            var events;
+            var logger = document.querySelector('#logger');
+            var __console_log = console.log;
+            window.console.log = function(msg) {
+                logger.innerHTML = logger.innerHTML + '<br>' + msg;
+                logger.scrollTop = logger.scrollHeight;
+                __console_log.apply(window.console, arguments);
+            };
+
+            var events = {};
             var video = document.querySelector('video');
             var dp = MediaPlayer().create();
             var bindTo = ['playing', 'timeupdate', 'seeking', 'seeked', 'ended'];
@@ -37,6 +61,27 @@
                 dp.attachSource(str);
                 dp.play();
             }
+
+            function getBufferedRanges(buf) {
+                var str = '';
+                for (var i = 0; i < buf.length; i++) {
+                    str += buf.start(i) + '-' + buf.end(i) + ', ';
+                }
+                return str;
+            }
+
+            setInterval(function() {
+                var status = 'readyState: ' + video.readyState + '<br>';
+                status += 'currentTime: ' + video.currentTime + ' / ' + video.duration + '<br>';
+                status += 'buffers: ' + getBufferedRanges(video.buffered) + '<br>';
+
+                status += '<br><strong>events:</strong><br>';
+                for (var i = 0; i < bindTo.length; i++) {
+                    status += bindTo[i] + ': ' + (events[bindTo[i]] ? events[bindTo[i]] : '-') + '<br>';
+                }
+
+                document.querySelector('#state').innerHTML = status;
+            }, 300);
         </script>
     </body>
 </html>
