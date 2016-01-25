@@ -19,28 +19,36 @@ if (commander.key) {
 
 var hostname = config.BASE_CAPABILITIES['browserstack.user'] + '.browserstack.com';
 
-for (let spec in config.RUNNERS) {
+function run_suite(spec, suite, driver) {
+    describe(spec + ' - ' + config.RUNNERS[spec].suites[suite], function() {
+        require('./spec/' + config.RUNNERS[spec].suites[suite])(driver, hostname);
+    });
+}
+
+function run_runner(spec) {
+    test.describe(spec, function() {
+        var capabilities = Object.assign({}, config.BASE_CAPABILITIES, config.RUNNERS[spec].capabilities);
+        var driver = new webdriver.Builder()
+            .usingServer('http://hub.browserstack.com/wd/hub')
+            .withCapabilities(capabilities)
+            .build();
+
+        for (var suite in config.RUNNERS[spec].suites) {
+            if (config.RUNNERS[spec].suites.hasOwnProperty(suite)) {
+                run_suite(spec, suite, driver);
+            }
+        }
+
+        test.after(function() {
+            driver.quit();
+        });
+    });
+}
+
+for (var spec in config.RUNNERS) {
     if (config.RUNNERS.hasOwnProperty(spec)) {
         if (!commander.runner || spec === commander.runner) {
-            test.describe(spec, function() {
-                let capabilities = Object.assign({}, config.BASE_CAPABILITIES, config.RUNNERS[spec].capabilities);
-                let driver = new webdriver.Builder()
-                    .usingServer('http://hub.browserstack.com/wd/hub')
-                    .withCapabilities(capabilities)
-                    .build();
-
-                for (let suite in config.RUNNERS[spec].suites) {
-                    if (config.RUNNERS[spec].suites.hasOwnProperty(suite)) {
-                        describe(spec + ' - ' + config.RUNNERS[spec].suites[suite], function() {
-                            require('./spec/' + config.RUNNERS[spec].suites[suite])(driver, hostname);
-                        });
-                    }
-                }
-
-                test.after(function() {
-                    driver.quit();
-                });
-            });
+            run_runner(spec);
         }
     }
 }

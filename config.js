@@ -1,8 +1,8 @@
-"use strict"
+"use strict";
 
-const DRIVER = 'browserstack-webdriver';
+var DRIVER = 'browserstack-webdriver';
 
-const RUNNERS = {
+var RUNNERS = {
     'Win7 FF': {
         'capabilities': {
             'browserName': 'firefox',
@@ -37,7 +37,7 @@ const RUNNERS = {
     }
 };
 
-const BASE_CAPABILITIES = {
+var BASE_CAPABILITIES = {
     'project': 'dash.js',
     'browserstack.user': '',
     'browserstack.key': '',
