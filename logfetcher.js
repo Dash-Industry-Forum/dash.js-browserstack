@@ -9,10 +9,14 @@ commander.option('-u, --user [user]')
 var auth_string = commander.user + ':' + commander.key;
 var outdir = 'logs/' + process.env.BUILD_TAG;
 
-if (!fs.statSync('logs')) {
+try {
+    fs.accessSync('logs', fs.F_OK);
+} catch (e) {
     fs.mkdir('logs');
 }
-if (!fs.statSync(outdir)) {
+try {
+    fs.accessSync(outdir, fs.F_OK);
+} catch (e) {
     fs.mkdir(outdir);
 }
 
