@@ -4,7 +4,7 @@ var config = require('./config');
 var webdriver = require(config.DRIVER);
 var test = require('browserstack-webdriver/testing');
 var commander = require('commander');
-var polyfill = require('./polyfill');
+require('./polyfill');
 
 commander.option('-r, --runner [runner]')
     .option('-u, --user [user]')
@@ -29,6 +29,8 @@ function run_suite(spec, suite, driver) {
 function run_runner(spec) {
     test.describe(spec, function() {
         var capabilities = Object.assign({}, config.BASE_CAPABILITIES, config.RUNNERS[spec].capabilities);
+        capabilities.build = capabilities.project + ' - ' + spec;
+
         var driver = new webdriver.Builder()
             .usingServer('http://hub.browserstack.com/wd/hub')
             .withCapabilities(capabilities)

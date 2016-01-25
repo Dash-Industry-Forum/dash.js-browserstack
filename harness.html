@@ -39,6 +39,7 @@
 
             dp.initialize();
             dp.attachView(video);
+            dp.setAutoPlay(false);
 
             function listener(e) {
                 if (events[e.type]) {
@@ -81,7 +82,7 @@
                 }
 
                 document.querySelector('#state').innerHTML = status;
-            }, 300);
+            }, 250);
         </script>
     </body>
 </html>
