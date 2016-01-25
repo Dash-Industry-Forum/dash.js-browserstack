@@ -39,6 +39,7 @@ var RUNNERS = {
 
 var BASE_CAPABILITIES = {
     'project': 'dash.js',
+    'build': 'dash.js',
     'browserstack.user': '',
     'browserstack.key': '',
     'browserstack.debug': true,

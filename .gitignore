@@ -1,3 +1,4 @@
 .nvmrc
 node_modules
 dash
+sessions.json

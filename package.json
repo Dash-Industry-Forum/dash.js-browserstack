@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "browserstack-webdriver": "^2.41.1",
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "jsonfile": "^2.2.3",
+    "request": "^2.67.0"
   }
 }
