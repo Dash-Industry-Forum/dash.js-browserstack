@@ -10,6 +10,7 @@
     "url": ""
   },
   "dependencies": {
-    "browserstack-webdriver": "^2.41.1"
+    "browserstack-webdriver": "^2.41.1",
+    "commander": "^2.9.0"
   }
 }
