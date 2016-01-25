@@ -12,12 +12,12 @@ var outdir = 'logs/' + process.env.BUILD_TAG;
 try {
     fs.accessSync('logs', fs.F_OK);
 } catch (e) {
-    fs.mkdir('logs');
+    fs.mkdirSync('logs');
 }
 try {
     fs.accessSync(outdir, fs.F_OK);
 } catch (e) {
-    fs.mkdir(outdir);
+    fs.mkdirSync(outdir);
 }
 
 function store_run(run) {
