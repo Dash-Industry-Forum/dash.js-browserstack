@@ -4,6 +4,7 @@ var config = require('./config');
 var webdriver = require(config.DRIVER);
 var test = require('browserstack-webdriver/testing');
 var commander = require('commander');
+var polyfill = require('./polyfill');
 
 commander.option('-r, --runner [runner]')
     .option('-u, --user [user]')
