@@ -28,6 +28,8 @@ try {
     fs.mkdirSync(outdir);
 }
 
+var html = '<html><head><title>Dash.js BrowserStack Run Logs</title></head><body>';
+
 function store_run(run) {
     var auth_string = commander.user + ':' + commander.key;
     request.get({
@@ -44,6 +46,8 @@ function store_run(run) {
 
             request(video_url).pipe(fs.createWriteStream(outdir + '/' + run + '.mp4'));
             //request(text_url).pipe(fs.createWriteStream(outdir + '/' + run + '.log'));
+
+            html += '<h2>' + run + '</h2><a href="' + run + '.mp4">Video</a><br>';
         }
     });
 }
@@ -53,3 +57,6 @@ for (var run in runs) {
         store_run(run);
     }
 }
+
+html += '</body></html>';
+fs.writeFileSync(outdir + '/index.html', html);
