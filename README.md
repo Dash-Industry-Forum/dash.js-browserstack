@@ -3,7 +3,7 @@
 A set of tests and associated running and helper code for performing Cross-Platform tests against [dash.js](https://github.com/Dash-Industry-Forum/dash.js).
 
 ## Quick Start to Viewing
-These tests are automatically ran once per day (8am GMT), and the resulting logs and video recordings uploaded to http://smp-scratch.s3-website-eu-west-1.amazonaws.com/browserstack/. Just take a look there to see the latest results.
+These tests should be automatically ran once per day (8am GMT), and the resulting logs and video recordings uploaded to http://smp-scratch.s3-website-eu-west-1.amazonaws.com/browserstack/. Just take a look there to see the latest results.
 
 ## Quick Start to Running
 ### Prerequisites

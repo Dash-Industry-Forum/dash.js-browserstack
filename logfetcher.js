@@ -28,7 +28,7 @@ try {
     fs.mkdirSync(outdir);
 }
 
-var html = '<html><head><title>Dash.js BrowserStack Run Logs</title></head><body>';
+var html = '<html><head><meta charset="UTF-8"><title>Dash.js BrowserStack Run Logs</title></head><body>';
 var waiting = 0;
 if (process.env.BUILD_NUMBER) {
     // Upload the build log thus far
