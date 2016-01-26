@@ -32,8 +32,15 @@ var html = '<html><head><title>Dash.js BrowserStack Run Logs</title></head><body
 var waiting = 0;
 if (process.env.BUILD_NUMBER) {
     // Upload the build log thus far
-    fs.createReadStream(process.env.WORKSPACE + '/../builds/' + process.env.BUILD_NUMBER + '/log').pipe(fs.createWriteStream(outdir + '/build.log'));
-    html += '<a href="build.log">Build Log</a><br>';
+    var log = fs.readFileSync(process.env.WORKSPACE + '/../builds/' + process.env.BUILD_NUMBER + '/log', 'utf8');
+    var lines = log.split('\n');
+    // Skip everything up to the BrowserStackLocal init
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i].indexOf('Press Ctrl-C to exit') > -1) {
+            break;
+        }
+    }
+    html += '<h2>Build log</h2><pre>' + lines.slice(i + 1).join('\n') + '</pre>';
 }
 
 function store_run(run) {
@@ -53,7 +60,7 @@ function store_run(run) {
             request(video_url).pipe(fs.createWriteStream(outdir + '/' + run + '.mp4'));
             //request(text_url).pipe(fs.createWriteStream(outdir + '/' + run + '.log'));
 
-            html += '<h2>' + run + '</h2><a href="' + run + '.mp4">Video</a><br>';
+            html += '<h2>' + run + '</h2><video src="' + run + '.mp4" controls="true" preload="none" width="1024" height="768"></video><br>';
         }
         waiting--;
         if (waiting === 0) {
