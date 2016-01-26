@@ -21,7 +21,8 @@
                 "browser": "Edge",
                 "os": "Windows",
                 "os_version": "10"
-            }
+            },
+            "suites": [ "core" ]
         },
         "Win10 IE": {
             "capabilities": {
@@ -29,7 +30,8 @@
                 "browser_version": "11.0",
                 "os": "Windows",
                 "os_version": "10"
-            }
+            },
+            "suites": [ "core" ]
         },
         "OSX FF": {
             "capabilities": {
