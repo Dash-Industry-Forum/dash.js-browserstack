@@ -29,6 +29,7 @@ try {
 }
 
 var html = '<html><head><title>Dash.js BrowserStack Run Logs</title></head><body>';
+var waiting = 0;
 
 function store_run(run) {
     var auth_string = commander.user + ':' + commander.key;
@@ -49,14 +50,17 @@ function store_run(run) {
 
             html += '<h2>' + run + '</h2><a href="' + run + '.mp4">Video</a><br>';
         }
+        waiting--;
+        if (waiting === 0) {
+            html += '</body></html>';
+            fs.writeFileSync(outdir + '/index.html', html);
+        }
     });
 }
 
 for (var run in runs) {
     if (runs.hasOwnProperty(run)) {
+        waiting++;
         store_run(run);
     }
 }
-
-html += '</body></html>';
-fs.writeFileSync(outdir + '/index.html', html);
