@@ -2,23 +2,38 @@
     "runners": {
         "Win7 FF": {
             "capabilities": {
-                "browserName": "firefox",
-                "os": "WINDOWS",
+                "browser": "Firefox",
+                "os": "Windows",
                 "os_version": "7"
             },
             "suites": [ "core" ]
         },
         "Win7 Chrome": {
             "capabilities": {
-                "browserName": "chrome",
-                "os": "WINDOWS",
+                "browser": "Chrome",
+                "os": "Windows",
                 "os_version": "7"
             },
             "suites": [ "core" ]
         },
+        "Win10 Edge": {
+            "capabilities": {
+                "browser": "Edge",
+                "os": "Windows",
+                "os_version": "10"
+            }
+        },
+        "Win10 IE": {
+            "capabilities": {
+                "browser": "IE",
+                "browser_version": "11.0",
+                "os": "Windows",
+                "os_version": "10"
+            }
+        },
         "OSX FF": {
             "capabilities": {
-                "browserName": "firefox",
+                "browser": "Firefox",
                 "os": "OS X",
                 "os_version": "Yosemite"
             },
@@ -26,9 +41,17 @@
         },
         "OSX Chrome": {
             "capabilities": {
-                "browserName": "chrome",
+                "browser": "Chrome",
                 "os": "OS X",
                 "os_version": "Yosemite"
+            },
+            "suites": [ "core" ]
+        },
+        "OSX Safari": {
+            "capabilities": {
+                "browser": "Safari",
+                "browser_version": "9.0",
+                "os": "OS X"
             },
             "suites": [ "core" ]
         }
@@ -38,12 +61,19 @@
         "build": "dash.js",
         "browserstack.user": "",
         "browserstack.key": "",
-        "browserstack.debug": true,
+        "browserstack.debug": false,
         "browserstack.local": true
     },
     "core_mpds": [
         "http://rdmedia.bbc.co.uk/dash/ondemand/testcard/1/client_manifest-events.mpd",
+        "http://dash.edgesuite.net/dash264/TestCases/1a/sony/SNE_DASH_SD_CASE1A_REVISED.mpd",
+        "http://vm2.dashif.org/dash/vod/testpic_2s/multi_subs.mpd",
+        "http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd",
+        "http://dash.edgesuite.net/dash264/TestCases/5a/1/manifest.mpd",
         "http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd",
-        "http://demo.unified-streaming.com/video/ateam/ateam.ism/ateam.mpd"
+        "http://vm2.dashif.org/livesim/testpic_2s/Manifest.mpd",
+        "http://vm2.dashif.org/livesim/mup_30/testpic_2s/Manifest.mpd",
+        "http://vm2.dashif.org/livesim-dev/segtimeline_1/testpic_2s/Manifest.mpd",
+        "http://vm2.dashif.org/livesim/periods_30/testpic_2s/Manifest.mpd"
     ]
 }
