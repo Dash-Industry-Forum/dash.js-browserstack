@@ -1,0 +1,49 @@
+{
+    "runners": {
+        "Win7 FF": {
+            "capabilities": {
+                "browserName": "firefox",
+                "os": "WINDOWS",
+                "os_version": "7"
+            },
+            "suites": [ "core" ]
+        },
+        "Win7 Chrome": {
+            "capabilities": {
+                "browserName": "chrome",
+                "os": "WINDOWS",
+                "os_version": "7"
+            },
+            "suites": [ "core" ]
+        },
+        "OSX FF": {
+            "capabilities": {
+                "browserName": "firefox",
+                "os": "OS X",
+                "os_version": "Yosemite"
+            },
+            "suites": [ "core" ]
+        },
+        "OSX Chrome": {
+            "capabilities": {
+                "browserName": "chrome",
+                "os": "OS X",
+                "os_version": "Yosemite"
+            },
+            "suites": [ "core" ]
+        }
+    },
+    "base_capabilities": {
+        "project": "dash.js",
+        "build": "dash.js",
+        "browserstack.user": "",
+        "browserstack.key": "",
+        "browserstack.debug": true,
+        "browserstack.local": true
+    },
+    "core_mpds": [
+        "http://rdmedia.bbc.co.uk/dash/ondemand/testcard/1/client_manifest-events.mpd",
+        "http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd",
+        "http://demo.unified-streaming.com/video/ateam/ateam.ism/ateam.mpd"
+    ]
+}

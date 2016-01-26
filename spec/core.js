@@ -1,12 +1,11 @@
 "use strict";
+/**
+ * Runs a simple playback test on a set of MPDs. Validates start of playback,
+ * seeking, and end of playback.
+ * Edit core_mpds in the config to add/remove MPDs to play.
+ */
 
 var test = require('browserstack-webdriver/testing');
-
-var mpds = [
-    'http://rdmedia.bbc.co.uk/dash/ondemand/testcard/1/client_manifest-events.mpd',
-    'http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd',
-    'http://demo.unified-streaming.com/video/ateam/ateam.ism/ateam.mpd'
-];
 
 function run_mpd(mpd, driver, hostname) {
     describe(mpd, function() {
@@ -36,7 +35,8 @@ function run_mpd(mpd, driver, hostname) {
     });
 }
 
-function run(driver, hostname) {
+function run(driver, config, hostname) {
+    var mpds = config.core_mpds;
     for (var i = 0; i < mpds.length; i++) {
         run_mpd(mpds[i], driver, hostname);
     }
