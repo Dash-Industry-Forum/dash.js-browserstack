@@ -1,11 +1,13 @@
 #!/bin/sh
 # Sample usage: samples/simple-runner.sh /path/to/config.json
-set -ux
+set -x
 config_file=$1
 local_identifier='DASH-IF-dash.js'
 local_path=`pwd`
 browserstack_user=`cat $config_file | jq -r '.secure_configuration["browserstack-user"]'`
 browserstack_key=`cat $config_file | jq -r '.secure_configuration["browserstack-key"]'`
+# Debuggign is useful, but we don't want keys in the logs
+set +x
 
 npm install
 BrowserStackLocal -only -f $browserstack_key $local_path -localIdentifier $local_identifier &
