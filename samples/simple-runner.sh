@@ -20,4 +20,4 @@ kill %1
 # Download reports
 node $local_path/logfetcher.js --user $browserstack_user --key $browserstack_key
 
-exit $OUT
+exit $RESULT
