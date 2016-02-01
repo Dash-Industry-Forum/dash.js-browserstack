@@ -30,7 +30,7 @@
             window.console.log = function(msg) {
                 lines.push(msg);
                 if (lines.length > 1000) {
-                    lines.pop();
+                    lines.unshift();
                 }
                 logger.innerHTML = lines.join('<br>');
                 logger.scrollTop = logger.scrollHeight;
