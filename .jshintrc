@@ -82,6 +82,7 @@
         "recipe_id":    true,
         "describe":     true,
         "it":           true,
-        "expect":       true
+        "expect":       true,
+        "MediaPlayer":  true
     }
 }

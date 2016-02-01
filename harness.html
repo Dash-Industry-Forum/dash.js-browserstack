@@ -18,11 +18,11 @@
         </style>
     </head>
     <body>
+        <p id="mpd"></p>
         <video controls="true"></video>
         <div id="state"></div>
         <div id="logger"></div>
-        <script type="text/javascript" src="/dash/dist/dash.externals.debug.js"></script>
-        <script type="text/javascript" src="/dash/dist/dash.no-externals.debug.js"></script>
+        <script type="text/javascript" src="/dash/dist/dash.all.debug.js"></script>
         <script type="text/javascript">
             var logger = document.querySelector('#logger');
             var __console_log = console.log;
@@ -59,6 +59,7 @@
 
             function mpd(str) {
                 resetEvents();
+                document.querySelector('#mpd').innerHTML = str;
                 dp.attachSource(str);
                 dp.play();
             }
