@@ -26,8 +26,13 @@
         <script type="text/javascript">
             var logger = document.querySelector('#logger');
             var __console_log = console.log;
+            var lines = [];
             window.console.log = function(msg) {
-                logger.innerHTML = logger.innerHTML + '<br>' + msg;
+                lines.push(msg);
+                if (lines.length > 1000) {
+                    lines.pop();
+                }
+                logger.innerHTML = lines.join('<br>');
                 logger.scrollTop = logger.scrollHeight;
                 __console_log.apply(window.console, arguments);
             };
