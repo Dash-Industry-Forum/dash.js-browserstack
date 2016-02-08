@@ -69,6 +69,10 @@ function store_run(run) {
                 }
             }
         }
+        if (fails > 0) {
+            html += '<p style="color:red;font-weight:bold">' + fails + ' tests failing</p>';
+        }
+        html += passes + '/' + (passes + fails) + ' passing<br>';
 
         if (!error) {
             // Currently the text URL seems to work with curl, but ask for a login for request :(
@@ -93,11 +97,6 @@ function store_run(run) {
             fs.writeFileSync(outdir + '/index.html', html);
         }
     });
-
-    if (fails > 0) {
-        html += '<p style="color:red;font-weight:bold">' + fails + ' tests failing</p>';
-    }
-    html += passes + '/' + (passes + fails) + ' passing<br>';
 }
 
 for (var run in runs) {
