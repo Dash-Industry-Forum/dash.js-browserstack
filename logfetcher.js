@@ -64,10 +64,14 @@ function store_run(run) {
             console.log(video_url);
             //console.log(text_url);
 
-            request(video_url).pipe(fs.createWriteStream(outdir + '/' + run + '.mp4'));
-            //request(text_url).pipe(fs.createWriteStream(outdir + '/' + run + '.log'));
+            if (video_url) {
+                request(video_url).pipe(fs.createWriteStream(outdir + '/' + run + '.mp4'));
+                //request(text_url).pipe(fs.createWriteStream(outdir + '/' + run + '.log'));
 
-            html += '<video src="' + run + '.mp4" controls="true" preload="none" width="1024" height="768"></video><br>';
+                html += '<video src="' + run + '.mp4" controls="true" preload="none" width="1024" height="768"></video><br>';
+            } else {
+                html += '<em>Session had no available video.</em><br>';
+            }
         }
         waiting--;
         if (waiting === 0) {
