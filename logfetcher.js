@@ -31,7 +31,7 @@ try {
 }
 
 var html = '<html><head><meta charset="UTF-8"><title>Dash.js BrowserStack Run Logs</title></head><body>';
-html += '<div style="position:fixed;top:0;right:0;background-color:#333;padding:1em">Jump to: <a href="#log">Log</a> | <a href="#capabilities">Videos</a></div>'
+html += '<div style="position:fixed;top:0;right:0;background-color:#CCC;padding:1em">Jump to: <a href="#log">Log</a> | <a href="#capabilities">Videos</a></div>'
 var waiting = 0;
 if (process.env.BUILD_NUMBER) {
     // Upload the build log thus far
