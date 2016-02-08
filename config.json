@@ -6,7 +6,7 @@
                 "os": "Windows",
                 "os_version": "7"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         },
         "Win7 Chrome": {
             "capabilities": {
@@ -14,7 +14,7 @@
                 "os": "Windows",
                 "os_version": "7"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         },
         "Win10 Edge": {
             "capabilities": {
@@ -22,7 +22,7 @@
                 "os": "Windows",
                 "os_version": "10"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         },
         "Win10 IE": {
             "capabilities": {
@@ -31,7 +31,7 @@
                 "os": "Windows",
                 "os_version": "10"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         },
         "OSX FF": {
             "capabilities": {
@@ -39,7 +39,7 @@
                 "os": "OS X",
                 "os_version": "Yosemite"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         },
         "OSX Chrome": {
             "capabilities": {
@@ -47,7 +47,7 @@
                 "os": "OS X",
                 "os_version": "Yosemite"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         },
         "OSX Safari": {
             "capabilities": {
@@ -55,7 +55,7 @@
                 "browser_version": "9.0",
                 "os": "OS X"
             },
-            "suites": [ "core" ]
+            "suites": [ "core", "live" ]
         }
     },
     "base_capabilities": {
@@ -72,7 +72,9 @@
         "http://vm2.dashif.org/dash/vod/testpic_2s/multi_subs.mpd",
         "http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd",
         "http://dash.edgesuite.net/dash264/TestCases/5a/1/manifest.mpd",
-        "http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd",
+        "http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd"
+    ],
+    "live_mpds": [
         "http://vm2.dashif.org/livesim/testpic_2s/Manifest.mpd",
         "http://vm2.dashif.org/livesim/mup_30/testpic_2s/Manifest.mpd",
         "http://vm2.dashif.org/livesim-dev/segtimeline_1/testpic_2s/Manifest.mpd",

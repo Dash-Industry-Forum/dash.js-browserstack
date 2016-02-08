@@ -4,25 +4,29 @@ set -x
 config_file=$1
 local_identifier='DASH-IF-dash.js'
 local_path=`pwd`
-browserstack_user=`cat $config_file | jq -r '.secure_configuration["browserstack-user"]'`
-browserstack_key=`cat $config_file | jq -r '.secure_configuration["browserstack-key"]'`
+browserstack_user=`jq -r '.secure_configuration["browserstack-user"]' < $config_file`
+# Debugging is useful, but we don't want keys in the logs
+set +x
+browserstack_key=`jq -r '.secure_configuration["browserstack-key"]' < $config_file`
+set -x
 # Running in a CI environment
 if [ ! -z "$BUILD_TAG" ]
   then
     local_identifier=$BUILD_TAG
     # Clean old build artifacts out
     rm -rf logs/jenkins*
-    mkdir logs
-    # Create/update an index file
-    echo -e "<a href="$BUILD_TAG">$BUILD_TAG</a><br>\n$(head -n 28 logs/index.html)" > logs/index.html
+    if [ ! -d "logs" ]; then
+        mkdir logs
+    fi
+    touch logs/index.html
 fi
-# Debugging is useful, but we don't want keys in the logs
-set +x
 
 npm install
+set +x
 BrowserStackLocal -only -f $browserstack_key $local_path -localIdentifier $local_identifier &
 sleep 5
-mocha specrunner.js --user $browserstack_user --key $browserstack_key --identifier $local_identifier
+set -x
+multi="json=report.json spec=-" node_modules/.bin/mocha specrunner.js --user $browserstack_user --key $browserstack_key --identifier $local_identifier --reporter mocha-multi
 RESULT=$?
 
 # Stop BrowserStackLocal
@@ -31,5 +35,11 @@ kill %1
 
 # Download reports
 node $local_path/logfetcher.js --user $browserstack_user --key $browserstack_key
+
+passes=`jq '.stats.passes' < report.json`
+fails=`jq  '.stats.tests' < report.json`
+
+# Create/update an index file
+echo -e "<a href="$BUILD_TAG">$BUILD_TAG</a> $(echo -n $passes)/$(echo -n $fails)<br>\n$(head -n 28 logs/index.html)" > logs/index.html
 
 exit $RESULT

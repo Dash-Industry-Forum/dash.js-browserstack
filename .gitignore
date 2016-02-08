@@ -1,5 +1,6 @@
-.nvmrc
 node_modules
 dash
-sessions.json
 logs
+report.json
+sessions.json
+.nvmrc

@@ -5,17 +5,15 @@
  * Edit core_mpds in the config to add/remove MPDs to play.
  */
 
-var test = require('browserstack-webdriver/testing');
-
-function run_mpd(mpd, driver, hostname) {
+function run_mpd(mpd, test, driver, hostname) {
     describe(mpd, function() {
         test.it('should play the video', function() {
-            driver.get('http://' + hostname + '/harness.html')
+            driver.get(hostname + '/harness.html')
             .then(function() {
                 driver.executeScript('mpd("' + mpd + '")');
                 driver.wait(function() {
-                    return driver.executeScript('return events.timeupdate;');
-                }, 10000);
+                    return driver.executeScript('return events.timeupdate >= 15;');
+                }, 15000);
             });
         });
 
@@ -35,10 +33,10 @@ function run_mpd(mpd, driver, hostname) {
     });
 }
 
-function run(driver, config, hostname) {
+function run(test, driver, config, hostname) {
     var mpds = config.core_mpds;
     for (var i = 0; i < mpds.length; i++) {
-        run_mpd(mpds[i], driver, hostname);
+        run_mpd(mpds[i], test, driver, hostname);
     }
 }
 

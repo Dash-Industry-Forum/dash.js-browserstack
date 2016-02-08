@@ -16,6 +16,11 @@ These tests should be automatically ran once per day (8am GMT), and the resultin
 2. Start BrowserStackLocal with ```BrowserStackLocal -only -f YOUR_KEY PATH_TO_WORKING_DIR -localIdentifier SESSION_IDENTIFIER```
 3. Run tests in working directory with ```mocha specrunner.js --user YOUR_USER --key YOUR_KEY --identifier SESSION_IDENTIFIER```
 
+## Running locally
+1. Ensure you have a Selenium webdriver installed and available in your path
+2. Ensure that your dash.js-browserstack is available on a webserver
+3. Run the tests with, for example, ```mocha specrunner.js --local chrome --url http://localhost/dash.js-browserstack --runner "Win7 Chrome"```
+
 ## Advanced Running
 samples/simple-runner.sh does the above, but with some bonuses such as downloading the resulting logs and creating an index to view them. It can be run both in a Jenkins CI environment and locally, with the invocation ```samples/simple-runner.sh /path/to/config.json```. A sample config file would look as follows:
 

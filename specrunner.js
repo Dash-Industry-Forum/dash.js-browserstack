@@ -1,16 +1,17 @@
 "use strict";
 
 var config = require('./config.json');
-var webdriver = require('browserstack-webdriver');
-var test = require('browserstack-webdriver/testing');
 var commander = require('commander');
 var jsonfile = require('jsonfile');
+var test;
 require('./lib/polyfill');
 
 commander.option('-r, --runner [runner]', 'Specify a specific Capability set to run on, e.g. --runner "Win7 Chrome". Runs all by default.')
     .option('-u, --user [user]', 'The BrowserStack API user to use.')
     .option('-k, --key [key]', 'The BrowserStack API key to use.')
-    .option('-i --identifier [identifier]', 'The BrowserStack LocalIdentifier to use. Optional.')
+    .option('-i, --identifier [identifier]', 'The BrowserStack LocalIdentifier to use. Optional.')
+    .option('-l, --local [browser]', 'Use local webdriver instead of BrowserStack with the specified browser.')
+    .option('-u, --url [url]', 'The URL for dash.js-browser. Required if --local.')
     .parse(process.argv);
 
 // Update capabilities with credentials if provided
@@ -23,17 +24,41 @@ if (commander.key) {
 if (commander.identifier) {
     config.base_capabilities['browserstack.localIdentifier'] = commander.identifier;
 }
+if (commander.local) {
+    test = require('selenium-webdriver/testing');
+} else {
+    test = require('browserstack-webdriver/testing');
+}
 // If we're running on Jenkins, tag with the specific build
 if (process.env.BUILD_TAG) {
     config.base_capabilities.build += '- ' + process.env.BUILD_TAG;
 }
 
 // This is the hostname that will serve the local directory
-var hostname = config.base_capabilities['browserstack.user'] + '.browserstack.com';
+var hostname = commander.url ? commander.url : 'http://' + config.base_capabilities['browserstack.user'] + '.browserstack.com';
+
+function get_driver(capabilities) {
+    var webdriver,
+        driver;
+    if (commander.local) {
+        webdriver = require('selenium-webdriver');
+        driver = new webdriver.Builder()
+            .withCapabilities(webdriver.Capabilities[commander.local]())
+            .build();
+    } else {
+        webdriver = require('browserstack-webdriver');
+        driver = new webdriver.Builder()
+            .usingServer('http://hub.browserstack.com/wd/hub')
+            .withCapabilities(capabilities)
+            .build();
+    }
+
+    return driver;
+}
 
 function run_suite(spec, suite, driver) {
-    describe(spec + ' - ' + config.runners[spec].suites[suite], function() {
-        require('./spec/' + config.runners[spec].suites[suite])(driver, config, hostname);
+    describe(config.runners[spec].suites[suite], function() {
+        require('./spec/' + config.runners[spec].suites[suite])(test, driver, config, hostname);
     });
 }
 
@@ -51,10 +76,7 @@ function run_runner(spec) {
         test.describe(spec, function() {
             var capabilities = Object.assign({}, config.base_capabilities, config.runners[spec].capabilities);
 
-            var driver = new webdriver.Builder()
-                .usingServer('http://hub.browserstack.com/wd/hub')
-                .withCapabilities(capabilities)
-                .build();
+            var driver = get_driver(capabilities);
 
             for (var suite in config.runners[spec].suites) {
                 if (config.runners[spec].suites.hasOwnProperty(suite)) {

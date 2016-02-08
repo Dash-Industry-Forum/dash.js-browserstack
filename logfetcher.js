@@ -3,9 +3,11 @@
  * and downloads the videos of th BrowserStack sessions.
  * Written for Node 0.12
  */
+require('./lib/polyfill');
 var request = require('request');
 var fs = require('fs');
 var runs = require('./sessions.json');
+var report = require('./report.json');
 var commander = require('commander');
 
 commander.option('-u, --user [user]', 'The BrowserStack API user to use.')
@@ -44,7 +46,12 @@ if (process.env.BUILD_NUMBER) {
 }
 
 function store_run(run) {
+    var i;
+    var passes = 0;
+    var fails = 0;
     var auth_string = commander.user + ':' + commander.key;
+    html += '<h2>' + run + '</h2>';
+
     request.get({
         url: 'https://' + auth_string + '@www.browserstack.com/automate/sessions/' + runs[run] + '.json',
         json: true
@@ -60,7 +67,7 @@ function store_run(run) {
             request(video_url).pipe(fs.createWriteStream(outdir + '/' + run + '.mp4'));
             //request(text_url).pipe(fs.createWriteStream(outdir + '/' + run + '.log'));
 
-            html += '<h2>' + run + '</h2><video src="' + run + '.mp4" controls="true" preload="none" width="1024" height="768"></video><br>';
+            html += '<video src="' + run + '.mp4" controls="true" preload="none" width="1024" height="768"></video><br>';
         }
         waiting--;
         if (waiting === 0) {
@@ -68,6 +75,21 @@ function store_run(run) {
             fs.writeFileSync(outdir + '/index.html', html);
         }
     });
+
+    for (i = 0; i < report.tests.length; i++) {
+        if (report.tests[i].fullTitle.startsWith(run)) {
+            if (report.tests[i].err) {
+                fails++;
+            } else {
+                passes++;
+            }
+        }
+    }
+
+    if (fails > 0) {
+        html += '<p style="color:red;font-weight:bold">' + fails + ' tests failing</p>';
+    }
+    html += passes + '/' + (passes + fails) + 'passing<br>';
 }
 
 for (var run in runs) {
