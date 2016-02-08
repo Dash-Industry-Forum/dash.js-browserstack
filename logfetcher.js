@@ -62,7 +62,7 @@ function store_run(run) {
         html += '<h3>' + run + '</h3>';
         for (i = 0; i < report.tests.length; i++) {
             if (report.tests[i].fullTitle.startsWith(run)) {
-                if (report.tests[i].err) {
+                if (Object.keys(report.tests[i].err).length === 0) {
                     fails++;
                 } else {
                     passes++;
