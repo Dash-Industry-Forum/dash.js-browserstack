@@ -31,6 +31,7 @@ try {
 }
 
 var html = '<html><head><meta charset="UTF-8"><title>Dash.js BrowserStack Run Logs</title></head><body>';
+html += '<div style="position:fixed;top:0;right:0;background-color:#333;padding:1em">Jump to: <a href="#log">Log</a> | <a href="#capabilities">Videos</a></div>'
 var waiting = 0;
 if (process.env.BUILD_NUMBER) {
     // Upload the build log thus far
@@ -42,8 +43,10 @@ if (process.env.BUILD_NUMBER) {
             break;
         }
     }
-    html += '<h2>Build log</h2><pre>' + lines.slice(i + 1).join('\n') + '</pre>';
+    html += '<h2><a name="log">Build log</a></h2><pre>' + lines.slice(i + 1).join('\n') + '</pre>';
 }
+
+html += '<h2><a name="capabilities">Capability Videos</a></h2>';
 
 function store_run(run) {
     var i;
@@ -56,7 +59,7 @@ function store_run(run) {
         json: true
     },
     function(error, response, body) {
-        html += '<h2>' + run + '</h2>';
+        html += '<h3>' + run + '</h3>';
         for (i = 0; i < report.tests.length; i++) {
             if (report.tests[i].fullTitle.startsWith(run)) {
                 if (report.tests[i].err) {
@@ -66,7 +69,7 @@ function store_run(run) {
                 }
             }
         }
-    
+
         if (!error) {
             // Currently the text URL seems to work with curl, but ask for a login for request :(
             var video_url = body.automation_session.video_url;
