@@ -50,13 +50,23 @@ function store_run(run) {
     var passes = 0;
     var fails = 0;
     var auth_string = commander.user + ':' + commander.key;
-    html += '<h2>' + run + '</h2>';
 
     request.get({
         url: 'https://' + auth_string + '@www.browserstack.com/automate/sessions/' + runs[run] + '.json',
         json: true
     },
     function(error, response, body) {
+        html += '<h2>' + run + '</h2>';
+        for (i = 0; i < report.tests.length; i++) {
+            if (report.tests[i].fullTitle.startsWith(run)) {
+                if (report.tests[i].err) {
+                    fails++;
+                } else {
+                    passes++;
+                }
+            }
+        }
+    
         if (!error) {
             // Currently the text URL seems to work with curl, but ask for a login for request :(
             var video_url = body.automation_session.video_url;
@@ -73,6 +83,7 @@ function store_run(run) {
                 html += '<em>Session had no available video.</em><br>';
             }
         }
+
         waiting--;
         if (waiting === 0) {
             html += '</body></html>';
@@ -80,20 +91,10 @@ function store_run(run) {
         }
     });
 
-    for (i = 0; i < report.tests.length; i++) {
-        if (report.tests[i].fullTitle.startsWith(run)) {
-            if (report.tests[i].err) {
-                fails++;
-            } else {
-                passes++;
-            }
-        }
-    }
-
     if (fails > 0) {
         html += '<p style="color:red;font-weight:bold">' + fails + ' tests failing</p>';
     }
-    html += passes + '/' + (passes + fails) + 'passing<br>';
+    html += passes + '/' + (passes + fails) + ' passing<br>';
 }
 
 for (var run in runs) {
