@@ -25,11 +25,9 @@ npm install
 set +x
 BrowserStackLocal -only -f $browserstack_key $local_path -localIdentifier $local_identifier &
 sleep 5
-set -x
 multi="json=report.json spec=-" node_modules/.bin/mocha specrunner.js --user $browserstack_user --key $browserstack_key --identifier $local_identifier --reporter mocha-multi
 RESULT=$?
 
-set +x
 # Stop BrowserStackLocal
 jobs
 kill %1
