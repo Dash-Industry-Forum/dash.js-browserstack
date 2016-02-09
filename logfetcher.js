@@ -63,9 +63,9 @@ function store_run(run) {
         for (i = 0; i < report.tests.length; i++) {
             if (report.tests[i].fullTitle.startsWith(run)) {
                 if (Object.keys(report.tests[i].err).length === 0) {
-                    fails++;
-                } else {
                     passes++;
+                } else {
+                    fails++;
                 }
             }
         }
