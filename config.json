@@ -72,12 +72,14 @@
         "http://vm2.dashif.org/dash/vod/testpic_2s/multi_subs.mpd",
         "http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd",
         "http://dash.edgesuite.net/dash264/TestCases/5a/1/manifest.mpd",
-        "http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd"
+        "http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd",
+        "http://wowzaec2demo.streamlock.net/vod/_definst_/ElephantsDream/smil:ElephantsDream.smil/manifest_mvnumber.mpd"
     ],
     "live_mpds": [
         "http://vm2.dashif.org/livesim/testpic_2s/Manifest.mpd",
         "http://vm2.dashif.org/livesim/mup_30/testpic_2s/Manifest.mpd",
         "http://vm2.dashif.org/livesim-dev/segtimeline_1/testpic_2s/Manifest.mpd",
-        "http://vm2.dashif.org/livesim/periods_30/testpic_2s/Manifest.mpd"
+        "http://vm2.dashif.org/livesim/periods_30/testpic_2s/Manifest.mpd",
+        "http://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mvnumber.mpd"
     ]
 }
